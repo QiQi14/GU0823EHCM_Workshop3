@@ -8,11 +8,11 @@ public class CharacterBattle : MonoBehaviour
 {
     private Character_Base characterBase;
     private bool Attacking = true;
-    private State state;
+    public State state;
     private Vector3 slideTargetPosition;
     private Action onSlideComplete;
     public Vector3 startingPosition;
-    private  enum State
+    public enum State
     {
         Idle,
         Sliding,
@@ -66,12 +66,20 @@ public class CharacterBattle : MonoBehaviour
             characterBase.PlayIdleAnimation(new Vector3(1, 0));
             Attacking = true;
             state = State.Idle;
-            characterBase.SetTransform(true);
+            if (startingPosition.x < 0)
+            {
+                characterBase.SetTransform(true);
+            } else
+            {
+                characterBase.SetTransform(false);
+            }
+
         });
     } 
 
     public void Attack(CharacterBattle targetCharacterBattle)
     {
+        
         Vector3 slideTargetPosition = targetCharacterBattle.GetPosition() + (GetPosition() - targetCharacterBattle.GetPosition()).normalized * 1f;
         
 
@@ -86,10 +94,6 @@ public class CharacterBattle : MonoBehaviour
 
             }
         });
-
-
-
-
 
     }
 
