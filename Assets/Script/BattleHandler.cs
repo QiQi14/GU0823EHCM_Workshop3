@@ -93,7 +93,12 @@ public class BattleHandle : MonoBehaviour
 
     private void SetActiveCharacterBattle(CharacterBattle characterBattle)
     {
+        if (activeCharacterBattle != null)
+        {
+            activeCharacterBattle.HideSelectionCircle();
+        }
         activeCharacterBattle = characterBattle;
+        activeCharacterBattle.ShowSelectionCircle();
     }
 
     private void ChooseNextActiveCharacter()

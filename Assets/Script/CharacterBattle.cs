@@ -12,6 +12,9 @@ public class CharacterBattle : MonoBehaviour
     private Vector3 slideTargetPosition;
     private Action onSlideComplete;
     public Vector3 startingPosition;
+    private GameObject selectionCircleGameObject;
+
+
     public enum State
     {
         Idle,
@@ -22,6 +25,8 @@ public class CharacterBattle : MonoBehaviour
     private void Awake()
     {
         characterBase = GetComponent<Character_Base>();
+        selectionCircleGameObject = transform.Find("SelectionCircle").gameObject;
+        HideSelectionCircle();
         state = State.Idle;
     }
 
@@ -110,5 +115,15 @@ public class CharacterBattle : MonoBehaviour
         {
             characterBase.SetTransform(false);
         }
+    }
+
+    public void HideSelectionCircle()
+    {
+        selectionCircleGameObject.SetActive(false);
+    }
+
+    public void ShowSelectionCircle()
+    {
+        selectionCircleGameObject.SetActive(true);
     }
 }
