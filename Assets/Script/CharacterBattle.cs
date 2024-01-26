@@ -13,6 +13,8 @@ public class CharacterBattle : MonoBehaviour
     private Action onSlideComplete;
     public Vector3 startingPosition;
     private GameObject selectionCircleGameObject;
+    private HealthSystem healthSystem;
+
 
 
     public enum State
@@ -34,6 +36,8 @@ public class CharacterBattle : MonoBehaviour
     {
         characterBase.PlayIdleAnimation(new Vector3(1, 0));
         startingPosition = GetPosition();
+
+        healthSystem = new HealthSystem(100);
     }
 
     private void Update()
@@ -80,7 +84,17 @@ public class CharacterBattle : MonoBehaviour
             }
 
         });
-    } 
+    }
+
+    public void Damage(int damageAmount)
+    {
+        healthSystem.Damage(damageAmount);
+        Debug.Log("Hit " + healthSystem.GetHealthAmount());
+    }
+    public bool IsDead()
+    {
+        return healthSystem.IsDead();
+    }
 
     public void Attack(CharacterBattle targetCharacterBattle)
     {
@@ -96,7 +110,7 @@ public class CharacterBattle : MonoBehaviour
             {
                 Attacking = false;
                 characterBase.PlayAttackAnimation(attackDir);
-
+                targetCharacterBattle.Damage(40);
             }
         });
 

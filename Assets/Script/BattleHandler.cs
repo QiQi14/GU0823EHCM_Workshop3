@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using CodeMonkey;
 
 public class BattleHandle : MonoBehaviour
 {
@@ -27,6 +28,22 @@ public class BattleHandle : MonoBehaviour
         SetActiveCharacterBattle(playerCharacterBattle);
         playerCharacterBattle.state = CharacterBattle.State.Idle;
         enemyCharacterBattle.state = CharacterBattle.State.Idle;
+
+        //HealthSystem healthSystem = new HealthSystem(100);
+
+        //Debug.Log("Health: " +  healthSystem.GetHealth());
+
+        //CMDebug.ButtonUI(new Vector2(100, 100), "damage", () =>
+        //{
+        //    healthSystem.Damage(10);
+        //    Debug.Log("Damaged: " + healthSystem.GetHealth());
+        //});
+
+        //CMDebug.ButtonUI(new Vector2(-100, 100), "heal", () =>
+        //{
+        //    healthSystem.Heal(10);
+        //    Debug.Log("Damaged: " + healthSystem.GetHealth());
+        //});
     }
 
 
@@ -103,6 +120,11 @@ public class BattleHandle : MonoBehaviour
 
     private void ChooseNextActiveCharacter()
     {
+        if (TestBattleOver())
+        {
+            return;
+        }
+
         if (activeCharacterBattle == playerCharacterBattle) 
         {
             SetActiveCharacterBattle(enemyCharacterBattle);
@@ -120,5 +142,22 @@ public class BattleHandle : MonoBehaviour
             SetActiveCharacterBattle(playerCharacterBattle);
             playerCharacterBattle.state = CharacterBattle.State.Idle;
         }
+    }
+
+    private bool TestBattleOver()
+    {
+        if (playerCharacterBattle.IsDead())
+        {
+            Debug.Log("Enemy win!");
+            return true;
+        }
+
+        if (enemyCharacterBattle.IsDead())
+        {
+            Debug.Log("Player win!");
+            return true;
+        }
+
+        return false;
     }
 }
