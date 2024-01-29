@@ -30,6 +30,11 @@ public class Character_Base : MonoBehaviour
         
     }
 
+    public void PlayDeadAnimation(Vector3 animationDir)
+    {
+        animator.SetTrigger("IsDead");
+    }
+
     public void SetTransform(bool flipTransform)
     {
         if (flipTransform)

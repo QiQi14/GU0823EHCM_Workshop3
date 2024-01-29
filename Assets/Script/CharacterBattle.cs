@@ -14,8 +14,7 @@ public class CharacterBattle : MonoBehaviour
     public Vector3 startingPosition;
     private GameObject selectionCircleGameObject;
     private HealthSystem healthSystem;
-
-
+    public GameObject healthBar;
 
     public enum State
     {
@@ -38,6 +37,12 @@ public class CharacterBattle : MonoBehaviour
         startingPosition = GetPosition();
 
         healthSystem = new HealthSystem(100);
+        healthSystem.OnHealthChanged += HealthSystem_OnHealthChange;
+    }
+
+    private void HealthSystem_OnHealthChange(object sender, EventArgs e)
+    {
+        healthBar.transform.localScale = new Vector3 (healthSystem.GetHealthPercent(), healthBar.transform.localScale.y, healthBar.transform.localScale.z);
     }
 
     private void Update()
@@ -89,11 +94,22 @@ public class CharacterBattle : MonoBehaviour
     public void Damage(int damageAmount)
     {
         healthSystem.Damage(damageAmount);
-        Debug.Log("Hit " + healthSystem.GetHealthAmount());
+        DamagePopup.Create(GetPosition(), damageAmount, false);
+
+        if (healthSystem.IsDead())
+        {
+            characterBase.PlayDeadAnimation(new Vector3(1, 0));
+        }
     }
     public bool IsDead()
     {
         return healthSystem.IsDead();
+    }
+
+    public void OnPlayerDead()
+    {
+
+        state = State.Busy;
     }
 
     public void Attack(CharacterBattle targetCharacterBattle)

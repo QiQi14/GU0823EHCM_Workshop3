@@ -12,7 +12,7 @@ public class HealthSystem
 
     public HealthSystem(int healthMax)
     {
-        this.health = healthMax;
+        this.healthMax = healthMax;
         health = healthMax;
     }
 
