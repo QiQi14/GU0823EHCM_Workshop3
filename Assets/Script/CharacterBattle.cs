@@ -126,7 +126,8 @@ public class CharacterBattle : MonoBehaviour
             {
                 Attacking = false;
                 characterBase.PlayAttackAnimation(attackDir);
-                targetCharacterBattle.Damage(40);
+                int damageAmount = UnityEngine.Random.Range(20, 50);
+                targetCharacterBattle.Damage(damageAmount);
             }
         });
 

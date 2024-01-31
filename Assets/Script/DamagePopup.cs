@@ -37,11 +37,11 @@ public class DamagePopup : MonoBehaviour {
         textMesh.SetText(damageAmount.ToString());
         if (!isCriticalHit) {
             // Normal hit
-            textMesh.fontSize = 36;
+            textMesh.fontSize = 12;
             textColor = UtilsClass.GetColorFromString("FFC500");
         } else {
             // Critical hit
-            textMesh.fontSize = 45;
+            textMesh.fontSize = 18;
             textColor = UtilsClass.GetColorFromString("FF2B00");
         }
         textMesh.color = textColor;
@@ -54,8 +54,8 @@ public class DamagePopup : MonoBehaviour {
     }
 
     private void Update() {
-        transform.position += moveVector * Time.deltaTime;
-        moveVector -= moveVector * 8f * Time.deltaTime;
+        //transform.position += moveVector * Time.deltaTime;
+        //moveVector -= moveVector * 8f * Time.deltaTime;
 
         if (disappearTimer > DISAPPEAR_TIMER_MAX * .5f) {
             // First half of the popup lifetime
